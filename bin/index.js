@@ -4,6 +4,7 @@ const { exec } = require('child_process');
 const readline = require('readline');
 const os = require('os');
 const chalk = require('chalk');
+const env = require('../env');
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -18,17 +19,11 @@ let commandBuffer = '';
 const isatty = process.stdout.isTTY;
 const getUsername = os.userInfo().username;
 const getHostname = os.hostname();
+console.log(chalk.green('kenitra-v0.1.0\n'));
 
-
-if (isatty) {
-  console.log(chalk.green('kenitra-v0.1.0\n'));
-
-  const getAddress = process.env.SSH_CONNECTION.split(' ')[0];
-
-  sentWebhook(`A new user has connected to the server\nUsername: **${getUsername}**\nHostname: **${getHostname}**\nAddress: **${getAddress}**\nDate: **${new Date().toLocaleString()}**\n`);
-
-  rl.prompt();
-  rl.on('line', handleLineInput).on('close', handleClose);
+if (!isatty) {
+  console.log(chalk.red('This program must be run interactively.\n'));
+  process.exit(1);
 }
 
 /**
@@ -120,9 +115,8 @@ function executeCommand(command) {
  */
 async function sentWebhook(message)
 {
-  if (!isatty) return;
 
-  const url = process.env.DISCORD_WEBHOOK;
+  const url = env.DISCORD_WEBHOOK;
 
   const data = {
     content: message
@@ -135,4 +129,16 @@ async function sentWebhook(message)
     },
     body: JSON.stringify(data),
   });
+}
+
+try {
+  const getAddress = process.env.SSH_CONNECTION.split(' ')[0];
+
+  sentWebhook(`A new user has connected to the server\nUsername: **${getUsername}**\nHostname: **${getHostname}**\nAddress: **${getAddress}**\nDate: **${new Date().toLocaleString()}**\n`);
+
+  rl.prompt();
+  rl.on('line', handleLineInput).on('close', handleClose);
+} catch (error) {
+  console.error("❌ Error: ", error.message);
+  
 }

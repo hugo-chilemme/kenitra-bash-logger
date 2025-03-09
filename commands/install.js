@@ -6,6 +6,7 @@ const target = process.cwd() + '/bin/index.js';
 
 const scriptContent = `#!/bin/bash
 if [ -t 0 ]; then
+
 	exec "${target}" "$@"
 else
 	exec /bin/bash
