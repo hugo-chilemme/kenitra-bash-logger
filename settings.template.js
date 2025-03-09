@@ -8,7 +8,8 @@ module.exports = {
 	motd: [
 		'---------------------------------------------',
 		' ',
-		'Welcome to kenitra-v0.1.0',
+		'Welcome %username% to kenitra-v0.1.0 on %hostname%',
+		' %date% %time%',
 		' ',
 		'---------------------------------------------',
 	]
