@@ -5,7 +5,7 @@ const readline = require('readline');
 const chalk = require('chalk');
 const env = require('../settings');
 
-require('./lib/copyright');
+require('./lib/motd');
 const { getUsername, getHostname, getAddress, isAtty, getPrompt } = require('./lib/utils');
 const logWebhook = require('./lib/webhook');
 
