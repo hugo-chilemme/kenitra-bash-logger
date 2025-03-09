@@ -3,13 +3,12 @@
 const { exec } = require('child_process');
 const readline = require('readline');
 const chalk = require('chalk');
-const env = require('../settings');
+const env = require('../../settings');
 
 require('./lib/motd');
 const { getUsername, getHostname, getAddress, isAtty, getPrompt } = require('./lib/utils');
 
-const logWebhook = require('./lib/webhook');
-const logFile = require('./lib/logFile');
+const log = require('./lib/log');
 
 let isMultiLine = false;
 let commandBuffer = '';
@@ -100,8 +99,7 @@ function executeCommand(command) {
     if (stderr) console.error(stderr.trim());
     if (error) console.error(error.message.trim());
 
-    logWebhook.command(command, error, stdout, stderr);
-    logFile.command(command, error, stdout, stderr);
+    log.command(command, error, stdout, stderr);
       
     rl.prompt();
   });
@@ -110,8 +108,7 @@ function executeCommand(command) {
 
 try {
 
-  logWebhook.connect();
-  logFile.connect();
+  log.connect();
 
   rl.prompt();
   rl.on('line', handleLineInput).on('close', handleClose);

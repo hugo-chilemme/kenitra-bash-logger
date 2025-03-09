@@ -1,5 +1,5 @@
 const c = require('chalk');
-const env = require('../../settings');
+const env = require('../../../settings');
 const { getUsername, getHostname } = require('./utils');
 
 

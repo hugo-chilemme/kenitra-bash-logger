@@ -2,7 +2,7 @@ const fs = require('fs');
 const { execSync } = require('child_process');
 const path = require('path');
 
-const target = process.cwd() + '/bin/index.js';
+const target = process.cwd() + '/bin/client/shell.js';
 
 const scriptContent = `#!/bin/bash
 if [ -t 0 ]; then

@@ -1,5 +1,5 @@
 const os = require('os');
-const env = require('../../settings');
+const env = require('../../../settings');
 
 function getUsername() {
 	return os.userInfo().username;

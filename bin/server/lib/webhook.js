@@ -1,5 +1,4 @@
-const env = require('../../settings');
-const { getUsername, getHostname, getAddress } = require('./utils');
+const env = require('../../../settings');
 
 async function sentWebhook(message) {
 	const DISCORD_WEBHOOK = env.DISCORD_WEBHOOK;
@@ -30,16 +29,16 @@ async function sentWebhook(message) {
 }
 
 
-function connect()
+function connect(username, hostname, address)
 {
-	const message = `🔔 **${getUsername()}** connected to **${getHostname()}** from **${getAddress()}**`;
+	const message = `🔔 **${username}** connected to **${hostname}** from **${address}**`;
 
 	sentWebhook(message);
 }
 
-function command(command, error, stdout, stderr) {
+function command(username, command, error, stdout, stderr) {
 
-	let message = `📝 **${getUsername()}** ran command: \`${command}\`\n\n`;
+	let message = `📝 **${username}** ran command: \`${command}\`\n\n`;
 
 	if (error) {
 		message += '❌ **Error:**\n```sh\n' + error + '```';
