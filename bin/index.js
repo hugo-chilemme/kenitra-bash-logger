@@ -2,15 +2,15 @@
 
 const { exec } = require('child_process');
 const readline = require('readline');
-const os = require('os');
 const chalk = require('chalk');
 const env = require('../settings');
+
+const { getUsername, getHostname, getAddress } = require('./lib/utils');
 
 let isMultiLine = false;
 let commandBuffer = '';
 const isatty = process.stdout.isTTY;
-const getUsername = os.userInfo().username;
-const getHostname = os.hostname();
+
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -28,7 +28,7 @@ if (!isatty) {
 }
 
 function getPrompt() {
-  return env.prompt(getUsername, getHostname, process.cwd());
+  return env.prompt(getUsername(), getHostname(), process.cwd());
 }
 
 function handleSigint() {
@@ -87,7 +87,7 @@ function executeCommand(command) {
     if (error) console.error(error.message.trim());
 
     sendWebhook(`
-      Username: **${getUsername}**\nStatus: **${error ? 'Error' : 'Success'}**\nDate: **${new Date().toLocaleString()}**\nCommand: \`${command}\`\nOutput:\n\`\`\`bash\n${stdout || stderr || error}\n\`\`\``);
+      Username: **${getUsername()}**\nStatus: **${error ? 'Error' : 'Success'}**\nDate: **${new Date().toLocaleString()}**\nCommand: \`${command}\`\nOutput:\n\`\`\`bash\n${stdout || stderr || error}\n\`\`\``);
     rl.prompt();
   });
 }
@@ -117,9 +117,8 @@ async function sendWebhook(message) {
 }
 
 try {
-  const getAddress = process.env.SSH_CONNECTION.split(' ')[0];
 
-  sendWebhook(`A new user has connected to the server\nUsername: **${getUsername}**\nHostname: **${getHostname}**\nAddress: **${getAddress}**\nDate: **${new Date().toLocaleString()}**\n`);
+  sendWebhook(`A new user has connected to the server\nUsername: **${getUsername()}**\nHostname: **${getHostname()}**\nAddress: **${getAddress()}**\nDate: **${new Date().toLocaleString()}**\n`);
 
   rl.prompt();
   rl.on('line', handleLineInput).on('close', handleClose);
