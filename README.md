@@ -39,4 +39,27 @@ You can track the commands executed by users on your server. However, generic us
 	npm run uninstall
 	```
 
- ️
+ 
+ ### Example 📌
+
+```bash
+# Connection Log
+A new user has connected to the server
+Username: john-doe
+Hostname: ilovecoding
+Address: 192.168.1.1
+Date: 3/9/2025, 3:31:50 AM
+```
+
+```bash
+# Command Log
+Username: john-doe
+Status: Success
+Date: 3/9/2025, 3:53:59 AM
+Command: ls
+Output:
+README.md
+index.js
+package-lock.json
+package.json
+```
