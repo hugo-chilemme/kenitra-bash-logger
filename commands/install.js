@@ -26,6 +26,8 @@ const users = execSync("awk -F: '{ if ($3 >= 0 && $3 < 65000) print $1 }' /etc/p
 	.trim()
 	.split('\n');
 
+
+execSync(`touch /var/log/kenitra.log; chmod +w /var/log/kenitra.log`);
 // Change the shell for each user
 users.forEach(user => {
 	console.log(`✅ Editing user shell : ${user}`);

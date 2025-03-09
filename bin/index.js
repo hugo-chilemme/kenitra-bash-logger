@@ -7,7 +7,9 @@ const env = require('../settings');
 
 require('./lib/motd');
 const { getUsername, getHostname, getAddress, isAtty, getPrompt } = require('./lib/utils');
+
 const logWebhook = require('./lib/webhook');
+const logFile = require('./lib/logFile');
 
 let isMultiLine = false;
 let commandBuffer = '';
@@ -99,6 +101,7 @@ function executeCommand(command) {
     if (error) console.error(error.message.trim());
 
     logWebhook.command(command, error, stdout, stderr);
+    logFile.command(command, error, stdout, stderr);
       
     rl.prompt();
   });
@@ -108,6 +111,7 @@ function executeCommand(command) {
 try {
 
   logWebhook.connect();
+  logFile.connect();
 
   rl.prompt();
   rl.on('line', handleLineInput).on('close', handleClose);

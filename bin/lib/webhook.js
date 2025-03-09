@@ -2,14 +2,18 @@ const env = require('../../settings');
 const { getUsername, getHostname, getAddress } = require('./utils');
 
 async function sentWebhook(message) {
-	const url = env.DISCORD_WEBHOOK;
-  
+	const DISCORD_WEBHOOK = env.DISCORD_WEBHOOK;
+	
+	if(!DISCORD_WEBHOOK || !DISCORD_WEBHOOK.startsWith('http')) {
+		return;
+	}
+
 	const data = {
 	  content: message,
 	};
   
 	try {
-	  const response = await fetch(url, {
+	  const response = await fetch(DISCORD_WEBHOOK, {
 		method: 'POST',
 		headers: {
 		  'Content-Type': 'application/json',
