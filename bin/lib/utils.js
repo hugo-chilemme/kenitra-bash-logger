@@ -13,8 +13,13 @@ function getAddress() {
 	return process.env.SSH_CONNECTION?.split(' ')[0] || 'unknown';
 }
 
+function isAtty() {
+	return process.stdout.isTTY;
+}
+
 module.exports = {
 	getUsername,
 	getHostname,
-	getAddress
+	getAddress,
+	isAtty,
 }

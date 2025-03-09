@@ -5,11 +5,10 @@ const readline = require('readline');
 const chalk = require('chalk');
 const env = require('../settings');
 
-const { getUsername, getHostname, getAddress } = require('./lib/utils');
+const { getUsername, getHostname, getAddress, isAtty } = require('./lib/utils');
 
 let isMultiLine = false;
 let commandBuffer = '';
-const isatty = process.stdout.isTTY;
 
 
 const rl = readline.createInterface({
@@ -22,7 +21,7 @@ process.on('SIGINT', handleSigint);
 
 console.log(chalk.green('kenitra-v0.1.0\n'));
 
-if (!isatty) {
+if (!isAtty()) {
   console.log(chalk.red('This program must be run interactively.\n'));
   process.exit(1);
 }
