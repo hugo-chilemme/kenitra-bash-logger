@@ -4,7 +4,7 @@ const { exec } = require('child_process');
 const readline = require('readline');
 const os = require('os');
 const chalk = require('chalk');
-const env = require('../env');
+const env = require('../settings');
 
 let isMultiLine = false;
 let commandBuffer = '';
