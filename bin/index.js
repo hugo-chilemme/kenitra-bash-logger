@@ -5,6 +5,7 @@ const readline = require('readline');
 const chalk = require('chalk');
 const env = require('../settings');
 
+require('./lib/copyright');
 const { getUsername, getHostname, getAddress, isAtty, getPrompt } = require('./lib/utils');
 const logWebhook = require('./lib/webhook');
 
@@ -18,8 +19,6 @@ const rl = readline.createInterface({
 });
 
 process.on('SIGINT', handleSigint);
-
-console.log(chalk.green('kenitra-v0.1.0\n'));
 
 if (!isAtty()) {
   console.log(chalk.red('This program must be run interactively.\n'));
