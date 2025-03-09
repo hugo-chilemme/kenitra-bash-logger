@@ -1,10 +1,14 @@
-# Bash Controller Script
+# Bash Controller Script 🚀
 
-This script allows you to log connections and commands typed in real-time.
+This script allows you to log connections and commands typed in real-time. 📝
 
-## Instructions
+## Context 📚
 
-### Installation
+You can track the commands executed by users on your server. However, generic usernames like `root` or shared accounts can pose a problem as you cannot identify the actual user.
+
+## Instructions 📋
+
+### Installation 💻
 
 1. **Clone the Repository**:
 	First, clone the repository to your local machine using the following command:
@@ -19,7 +23,7 @@ This script allows you to log connections and commands typed in real-time.
 	npm run install
 	```
 
-### Applying for Root User
+### Applying for Root User 🔑
 
 3. **Apply the Script for Root User**:
 	To apply this script for the root user, execute the following command:
@@ -27,16 +31,12 @@ This script allows you to log connections and commands typed in real-time.
 	npm run apply-for-root
 	```
 
-### Uninstallation
+### Uninstallation ❌
 
 4. **Revert to Normal State**:
-	If you wish to revert to the normal state, execute the following command:
+	If you want to revert to the original state, execute the following command:
 	```bash
 	npm run uninstall
 	```
 
-## Additional Information
-
-- Ensure you have the necessary permissions to execute these commands.
-- The script logs all connections and commands in real-time, providing enhanced monitoring capabilities.
-- For any issues or further assistance, refer to the documentation or contact support.
+ ️
