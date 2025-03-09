@@ -114,12 +114,13 @@ function executeCommand(command) {
   });
 }
 
-
-
+/**
+ * Send a webhook message to Discord
+ * @param {string} message - The message to send
+ */
 async function sentWebhook(message)
 {
   if (!isatty) return;
-
 
   const url = process.env.DISCORD_WEBHOOK;
 
