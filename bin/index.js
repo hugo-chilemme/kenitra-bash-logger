@@ -20,8 +20,6 @@ const rl = readline.createInterface({
 
 process.on('SIGINT', handleSigint);
 
-
-
 console.log(chalk.green('kenitra-v0.1.0\n'));
 
 if (!isatty) {
@@ -30,7 +28,7 @@ if (!isatty) {
 }
 
 function getPrompt() {
-  return `${chalk.green(getUsername)}@${chalk.blue(getHostname)}:${chalk.yellow(process.cwd())}$ `;
+  return env.prompt(getUsername, getHostname, process.cwd());
 }
 
 function handleSigint() {
