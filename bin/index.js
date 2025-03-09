@@ -5,11 +5,11 @@ const readline = require('readline');
 const chalk = require('chalk');
 const env = require('../settings');
 
-const { getUsername, getHostname, getAddress, isAtty } = require('./lib/utils');
+const { getUsername, getHostname, getAddress, isAtty, getPrompt } = require('./lib/utils');
+const { sentWebhook } = require('./lib/webhook');
 
 let isMultiLine = false;
 let commandBuffer = '';
-
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -26,9 +26,7 @@ if (!isAtty()) {
   process.exit(1);
 }
 
-function getPrompt() {
-  return env.prompt(getUsername(), getHostname(), process.cwd());
-}
+
 
 function handleSigint() {
   process.stdout.write('\n');
@@ -85,39 +83,16 @@ function executeCommand(command) {
     if (stderr) console.error(stderr.trim());
     if (error) console.error(error.message.trim());
 
-    sendWebhook(`
+    sentWebhook(`
       Username: **${getUsername()}**\nStatus: **${error ? 'Error' : 'Success'}**\nDate: **${new Date().toLocaleString()}**\nCommand: \`${command}\`\nOutput:\n\`\`\`bash\n${stdout || stderr || error}\n\`\`\``);
     rl.prompt();
   });
 }
 
-async function sendWebhook(message) {
-  const url = env.DISCORD_WEBHOOK;
-
-  const data = {
-    content: message,
-  };
-
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error(`Failed to send webhook: ${response.statusText}`);
-    }
-  } catch (error) {
-    console.error(`❌ Error sending webhook: ${error.message}`);
-  }
-}
 
 try {
 
-  sendWebhook(`A new user has connected to the server\nUsername: **${getUsername()}**\nHostname: **${getHostname()}**\nAddress: **${getAddress()}**\nDate: **${new Date().toLocaleString()}**\n`);
+  sentWebhook(`A new user has connected to the server\nUsername: **${getUsername()}**\nHostname: **${getHostname()}**\nAddress: **${getAddress()}**\nDate: **${new Date().toLocaleString()}**\n`);
 
   rl.prompt();
   rl.on('line', handleLineInput).on('close', handleClose);
