@@ -37,6 +37,7 @@ function handleLineInput(input) {
 
   if (input === 'exit') {
     rl.close();
+    console.log('Goodbye!');
     return;
   }
 
