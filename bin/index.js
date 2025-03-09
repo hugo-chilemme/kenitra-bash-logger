@@ -6,7 +6,7 @@ const chalk = require('chalk');
 const env = require('../settings');
 
 const { getUsername, getHostname, getAddress, isAtty, getPrompt } = require('./lib/utils');
-const { sentWebhook } = require('./lib/webhook');
+const logWebhook = require('./lib/webhook');
 
 let isMultiLine = false;
 let commandBuffer = '';
@@ -83,8 +83,8 @@ function executeCommand(command) {
     if (stderr) console.error(stderr.trim());
     if (error) console.error(error.message.trim());
 
-    sentWebhook(`
-      Username: **${getUsername()}**\nStatus: **${error ? 'Error' : 'Success'}**\nDate: **${new Date().toLocaleString()}**\nCommand: \`${command}\`\nOutput:\n\`\`\`bash\n${stdout || stderr || error}\n\`\`\``);
+    logWebhook.command(command, error, stdout, stderr);
+      
     rl.prompt();
   });
 }
@@ -92,7 +92,7 @@ function executeCommand(command) {
 
 try {
 
-  sentWebhook(`A new user has connected to the server\nUsername: **${getUsername()}**\nHostname: **${getHostname()}**\nAddress: **${getAddress()}**\nDate: **${new Date().toLocaleString()}**\n`);
+  logWebhook.connect();
 
   rl.prompt();
   rl.on('line', handleLineInput).on('close', handleClose);
