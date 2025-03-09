@@ -40,6 +40,7 @@ function handleLineInput(input) {
     return;
   }
 
+
   if (input === '') {
     rl.prompt();
     return;
@@ -64,6 +65,20 @@ function handleLineInput(input) {
     }
     rl.prompt();
   } else {
+
+    if (commandBuffer.trim().startsWith('cd ')) {
+      const dir = commandBuffer.trim().substring(3).trim();
+      try {
+        process.chdir(dir);
+        rl.setPrompt(getPrompt());
+      } catch (error) {
+        console.error(`❌ Error: ${error.message}`);
+      }
+      commandBuffer = '';
+      rl.prompt();
+      return
+    }
+
     executeCommand(commandBuffer.trim());
     commandBuffer = '';
   }
